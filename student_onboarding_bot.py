@@ -40,7 +40,7 @@ async def on_member_join(member):
     elif "mellon" in school.lower():
         role = discord.utils.get(member.guild.roles, name="MCS")
     else:
-        await channel.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
+        await member.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
 
     # Send a DM to the new member asking for their class year
     await member.send("What is your class year?")
@@ -66,10 +66,10 @@ async def on_member_join(member):
     elif "prospective" in type_of_student.lower():
         role = discord.utils.get(member.guild.roles, name="Prospective Student")
     else:
-        await channel.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
+        await member.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
 
     # Post the accepted student's information in a channel
     channel = bot.get_channel(CHANNEL_ID)
-    await channel.send(f"Accepted Student {accepted_students}: Name: {name}, School/Major: {school_major}, Class Year: {class_year}, Type of Student: {type_of_student}")
+    await channel.send(f"Accepted Student {accepted_students}: Name: {name}, School/Major: {school}, Class Year: {class_year}, Type of Student: {type_of_student}")
 
 bot.run('BOT_TOKEN')
