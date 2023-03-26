@@ -56,20 +56,18 @@ async def on_member_join(member):
     msg = await bot.wait_for('message', check=check)
     type_of_student = msg.content
 
-    # Increment the accepted_students counter
-    global accepted_students
-    accepted_students += 1
-    
+        
      # Assign the new member a role based on their type of student
     if "current" in type_of_student.lower():
         role = discord.utils.get(member.guild.roles, name="Current Student")
     elif "prospective" in type_of_student.lower():
         role = discord.utils.get(member.guild.roles, name="Prospective Student")
+        # Increment the accepted_students counter
+        global accepted_students
+        accepted_students += 1
+        # Post the accepted student's information in a channel
+        channel = bot.get_channel(CHANNEL_ID)
+        await channel.send(f"Accepted Student {accepted_students}: Name: {name}, School/Major: {school}, Class Year: {class_year}, Type of Student: {type_of_student}")
     else:
         await member.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
-
-    # Post the accepted student's information in a channel
-    channel = bot.get_channel(CHANNEL_ID)
-    await channel.send(f"Accepted Student {accepted_students}: Name: {name}, School/Major: {school}, Class Year: {class_year}, Type of Student: {type_of_student}")
-
 bot.run('BOT_TOKEN')
