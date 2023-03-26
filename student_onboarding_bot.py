@@ -6,6 +6,17 @@ bot = commands.Bot(command_prefix='!')
 # Create a counter variable to keep track of the number of accepted students
 accepted_students = 0
 
+# Create a dictionary of school abbreviations and roles
+school_roles = {
+    "scs": "SCS",
+    "cit": "CIT",
+    "cfa": "CFA",
+    "dietrich": "Dietrich",
+    "heinz": "Heinz",
+    "tepper": "Tepper",
+    "mellon": "MCS"
+}
+
 @bot.event
 async def on_member_join(member):
     # Send a DM to the new member asking for their name
@@ -24,24 +35,13 @@ async def on_member_join(member):
     # Wait for the member to respond with their school
     msg = await bot.wait_for('message', check=check)
     school = msg.content
-    # Assign the new member a role based on their type of student
-    if "scs" in school.lower():
-        role = discord.utils.get(member.guild.roles, name="SCS")
-    elif "cit" in school.lower():
-        role = discord.utils.get(member.guild.roles, name="CIT")
-    elif "cfa" in school.lower():
-        role = discord.utils.get(member.guild.roles, name="CFA")
-    elif "dietrich" in school.lower():
-        role = discord.utils.get(member.guild.roles, name="Dietrich")
-    elif "heinz" in school.lower():
-        role = discord.utils.get(member.guild.roles, name="Heinz")
-    elif "tepper" in school.lower():
-        role = discord.utils.get(member.guild.roles, name="Tepper")
-    elif "mellon" in school.lower():
-        role = discord.utils.get(member.guild.roles, name="MCS")
-    else:
-        await member.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
-
+    # Iterate over the school_roles dictionary and assign roles based on the school abbreviation
+    for key, value in school_roles.items():
+        if key in school.lower():
+            role = discord.utils.get(member.guild.roles, name=value)
+            break
+        else:
+            await member.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
     # Send a DM to the new member asking for their class year
     await member.send("What is your class year?")
 
