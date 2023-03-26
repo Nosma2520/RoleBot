@@ -40,8 +40,8 @@ async def on_member_join(member):
         if key in school.lower():
             role = discord.utils.get(member.guild.roles, name=value)
             break
-        else:
-            await member.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
+    else:
+        await member.send("Something went wrong plz contact an admin to get roled. Sry :cry:")
     # Send a DM to the new member asking for their class year
     await member.send("What is your class year?")
 
